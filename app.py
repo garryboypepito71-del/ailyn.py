@@ -1,22 +1,28 @@
+"""
+AILYN HOUSE PROJECT & PAYROLL PLANNER
+Advanced Construction Activity & Receipt Management System
+Version: 1.0.0
+"""
+
 import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-# --- Theme Configuration & Injected Premium Glassmorphism Background Style ---
+# Configure page for search engines and social media
 st.set_page_config(
     page_title="AILYN HOUSE - Construction & Payroll Planner | Project Management",
     page_icon="🏗️",
     layout="wide",
     initial_sidebar_state="collapsed",
     menu_items={
-        'About': "🏗️ AILYN HOUSE Advanced Project & Payroll Planner v30000 - Professional Construction Management"
+        'About': "🏗️ AILYN HOUSE Advanced Project & Payroll Planner v30000"
     }
 )
 
-# SEO Meta Tags for Search Engines
+# SEO Meta Tags via HTML injection
 st.markdown("""
     <meta name="description" content="Advanced construction project management and payroll planning system with receipt tracking, financial dashboard, and organized ledger views.">
-    <meta name="keywords" content="construction management, project planning, receipt tracking, payroll, financial dashboard, building planner, project ledger">
+    <meta name="keywords" content="construction management, project planning, receipt tracking, payroll, financial dashboard, building planner">
     <meta name="author" content="Ailyn House Development Team">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:title" content="AILYN HOUSE - Construction & Payroll Planner">
@@ -28,7 +34,11 @@ st.markdown("""
     <link rel="canonical" href="https://ailyn-house-planner.streamlit.app">
 """, unsafe_allow_html=True)
 
-# Custom UI CSS to replicate the screenshot background, blur filter, and container layout
+# Import main app logic
+# For deployment, use: exec(open('ailyn.py.py').read())
+# For now, we'll keep the core functionality in this file
+
+# --- Theme Configuration & Injected Premium Glassmorphism Background Style ---
 st.markdown("""
     <style>
     /* Global Background Image with Dark Overlay and Blur */
@@ -60,7 +70,7 @@ st.markdown("""
     }
     
     .glass-header h1 {
-        color: #22c55e !important; /* Vibrant Emerald Green Title */
+        color: #22c55e !important;
         font-size: 2.3rem !important;
         font-weight: 700 !important;
         letter-spacing: 1.5px;
@@ -69,7 +79,7 @@ st.markdown("""
     }
     
     .glass-header p {
-        color: #a7f3d0 !important; /* Soft Sage text */
+        color: #a7f3d0 !important;
         font-weight: 500;
         margin-top: 8px;
         font-size: 0.9rem;
@@ -175,6 +185,9 @@ with col_nav2:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
+# Month list for reference
+month_list = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
 # ----------------- PAGE 1: INPUT DASHBOARD -----------------
 if st.session_state.current_page == "dashboard":
     st.subheader("📋 Advanced Activity & Receipt Entry")
@@ -183,7 +196,6 @@ if st.session_state.current_page == "dashboard":
         # 1. Date Inputs Stacked
         day = st.number_input("Day", min_value=1, max_value=31, value=datetime.now().day)
         
-        month_list = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
         current_month_idx = datetime.now().month - 1
         month = st.selectbox("Month", options=month_list, index=current_month_idx)
         
@@ -240,7 +252,7 @@ if st.session_state.current_page == "dashboard":
 elif st.session_state.current_page == "ledger":
     st.subheader("📊 Quick Stats & Materials Ledger Preview")
     
-    # Dynamic Financial Dashboard Cards Cloned From Your Layout
+    # Dynamic Financial Dashboard Cards
     total_spent = 0.0 if st.session_state.tasks_df.empty else st.session_state.tasks_df['Amount'].sum()
     
     st.markdown(f"""
@@ -259,7 +271,6 @@ elif st.session_state.current_page == "ledger":
     if st.session_state.tasks_df.empty:
         st.info("No records available yet. Access input dashboard framework to generate dynamic transactions.")
     else:
-        month_map = {"January":1, "February":2, "March":3, "April":4, "May":5, "June":6, "July":7, "August":8, "September":9, "October":10, "November":11, "December":12}
         display_df = st.session_state.tasks_df.copy()
         display_df['Month_Num'] = display_df['Month'].map(lambda m: month_list.index(m)+1 if m in month_list else 1)
         display_df = display_df.sort_values(by=['Year', 'Month_Num', 'Date']).drop(columns=['Month_Num'])
@@ -275,10 +286,12 @@ elif st.session_state.current_page == "ledger":
             
             html_content = f"""
             <!DOCTYPE html>
-            <html>
+            <html lang="en">
             <head>
                 <meta charset="utf-8">
-                <title>Advanced Project & Receipt Ledger</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>AILYN HOUSE - Advanced Project & Receipt Ledger</title>
+                <meta name="description" content="Professional construction project ledger and receipt tracking report">
                 <style>
                     body {{ 
                         font-family: 'Segoe UI', Arial, sans-serif; 
